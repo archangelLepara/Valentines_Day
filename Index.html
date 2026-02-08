@@ -23,8 +23,7 @@
     padding: 20px;
   }
 
-  h1 {
-    font-size: 2.5em;
+  h1, h2 {
     margin: 20px 0;
   }
 
@@ -101,12 +100,14 @@
 </head>
 <body>
 
+<!-- Name Input -->
 <div class="container" id="name-section">
   <h1>Enter your name</h1>
   <input type="text" id="username" placeholder="Your name">
   <button onclick="submitName()">Submit</button>
 </div>
 
+<!-- Valentine Question -->
 <div class="container hidden" id="valentine-section">
   <h1 id="greeting"></h1>
   <h2>Will you be my Valentine? 💕</h2>
@@ -114,24 +115,36 @@
   <button onclick="noValentine(this)">😅 NO</button>
 </div>
 
+<!-- Date Question -->
 <div class="container hidden" id="date-section">
   <h2>Do you want to go on a date with me?</h2>
   <button onclick="showHotels()">❤️ YES</button>
   <button onclick="noDate(this)">😅 NO</button>
 </div>
 
+<!-- Hotel Selection -->
 <div class="container hidden" id="hotel-section">
   <h2>Choose a hotel or restaurant in Malawi</h2>
-  <button class="hotel-btn" onclick="notMember()">Sunbird Capital</button>
-  <button class="hotel-btn" onclick="notMember()">Protea Hotel</button>
-  <button class="hotel-btn" onclick="notMember()">Latitude 13</button>
-  <button class="hotel-btn" onclick="notMember()">The Boma Hotel</button>
+  <button class="hotel-btn" onclick="startQuiz()">Sunbird Capital</button>
+  <button class="hotel-btn" onclick="startQuiz()">Protea Hotel</button>
+  <button class="hotel-btn" onclick="startQuiz()">Latitude 13</button>
+  <button class="hotel-btn" onclick="startQuiz()">The Boma Hotel</button>
 </div>
 
-<div class="container hidden" id="membership-section">
-  <h2>Oops! You are not a member of Horizon-Group 😅</h2>
-  <p>Be a member to access the date 💌</p>
-  <button onclick="window.open('https://docs.google.com/forms/d/1ex6iE1mmsD17BFnxUn1t7TRdAq-UPLBz_hZo7ziYXyE/viewform', '_blank')">Join Horizon-Group</button>
+<!-- Horizon-Group Mini Quiz -->
+<div class="container hidden" id="quiz-section">
+  <h2>Oops! You’re not a member yet 😅</h2>
+  <p>Answer this to see if you have what it takes to join Horizon-Group!</p>
+  <h3>Which is the main purpose of Horizon-Group?</h3>
+  <button onclick="quizAnswer(this, true)">Teach computer skills & stock market knowledge</button>
+  <button onclick="quizAnswer(this, false)">Sell candy and chocolates</button>
+  <button onclick="quizAnswer(this, false)">Organize parties</button>
+</div>
+
+<!-- Quiz Result -->
+<div class="container hidden" id="quiz-result">
+  <h2 id="quiz-message"></h2>
+  <p>💖 Welcome to Horizon-Group!</p>
 </div>
 
 <script>
@@ -171,9 +184,21 @@
     document.getElementById('hotel-section').classList.remove('hidden');
   }
 
-  function notMember() {
+  function startQuiz() {
     document.getElementById('hotel-section').classList.add('hidden');
-    document.getElementById('membership-section').classList.remove('hidden');
+    document.getElementById('quiz-section').classList.remove('hidden');
+  }
+
+  function quizAnswer(btn, correct) {
+    const message = document.getElementById('quiz-message');
+    if(correct) {
+      message.innerText = "🎉 Correct!";
+    } else {
+      message.innerText = "😅 Not quite… but welcome anyway!";
+    }
+    document.getElementById('quiz-section').classList.add('hidden');
+    document.getElementById('quiz-result').classList.remove('hidden');
+    createHearts(20);
   }
 
   function createHearts(count) {
@@ -189,4 +214,4 @@
 </script>
 
 </body>
-  </html>
+</html>
