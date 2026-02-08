@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: #fff;
+    text-align: center;
+    overflow-x: hidden;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2.5em;
+    margin: 20px 0;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: none;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    margin: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #ff6b81;
+    color: white;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #ff4757;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .hotel-btn {
+    display: block;
+    margin: 10px auto;
+    background-color: #ff7979;
+  }
+
+  .heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    transform: rotate(-45deg);
+    animation: float 3s linear infinite;
+  }
+
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+  }
+
+  .heart::before {
+    top: -10px;
+    left: 0;
+  }
+
+  .heart::after {
+    left: 10px;
+    top: 0;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0) rotate(-45deg); opacity:1; }
+    100% { transform: translateY(-800px) rotate(-45deg); opacity:0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="name-section">
+  <h1>Enter your name</h1>
+  <input type="text" id="username" placeholder="Your name">
+  <button onclick="submitName()">Submit</button>
+</div>
+
+<div class="container hidden" id="valentine-section">
+  <h1 id="greeting"></h1>
+  <h2>Will you be my Valentine? 💕</h2>
+  <button onclick="yesValentine()">❤️ YES</button>
+  <button onclick="noValentine(this)">😅 NO</button>
+</div>
+
+<div class="container hidden" id="date-section">
+  <h2>Do you want to go on a date with me?</h2>
+  <button onclick="showHotels()">❤️ YES</button>
+  <button onclick="noDate(this)">😅 NO</button>
+</div>
+
+<div class="container hidden" id="hotel-section">
+  <h2>Choose a hotel or restaurant in Malawi</h2>
+  <button class="hotel-btn" onclick="notMember()">Sunbird Capital</button>
+  <button class="hotel-btn" onclick="notMember()">Protea Hotel</button>
+  <button class="hotel-btn" onclick="notMember()">Latitude 13</button>
+  <button class="hotel-btn" onclick="notMember()">The Boma Hotel</button>
+</div>
+
+<div class="container hidden" id="membership-section">
+  <h2>Oops! You are not a member of Horizon-Group 😅</h2>
+  <p>Be a member to access the date 💌</p>
+  <button onclick="window.open('https://docs.google.com/forms/d/1ex6iE1mmsD17BFnxUn1t7TRdAq-UPLBz_hZo7ziYXyE/viewform', '_blank')">Join Horizon-Group</button>
+</div>
+
+<script>
+  function submitName() {
+    const name = document.getElementById('username').value.trim();
+    if(name === "") {
+      alert("Please enter your name!");
+      return;
+    }
+    document.getElementById('name-section').classList.add('hidden');
+    document.getElementById('valentine-section').classList.remove('hidden');
+    document.getElementById('greeting').innerText = `Hello ${name}!`;
+  }
+
+  function yesValentine() {
+    createHearts(20);
+    setTimeout(() => {
+      document.getElementById('valentine-section').classList.add('hidden');
+      document.getElementById('date-section').classList.remove('hidden');
+    }, 1500);
+  }
+
+  function noValentine(btn) {
+    btn.style.position = 'relative';
+    btn.style.left = Math.random() * 200 - 100 + "px";
+    btn.style.top = Math.random() * 50 - 25 + "px";
+  }
+
+  function noDate(btn) {
+    btn.style.position = 'relative';
+    btn.style.left = Math.random() * 200 - 100 + "px";
+    btn.style.top = Math.random() * 50 - 25 + "px";
+  }
+
+  function showHotels() {
+    document.getElementById('date-section').classList.add('hidden');
+    document.getElementById('hotel-section').classList.remove('hidden');
+  }
+
+  function notMember() {
+    document.getElementById('hotel-section').classList.add('hidden');
+    document.getElementById('membership-section').classList.remove('hidden');
+  }
+
+  function createHearts(count) {
+    for(let i=0; i<count; i++){
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.animationDuration = 2 + Math.random() * 3 + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+  }
+</script>
+
+</body>
+  </html>
